@@ -30,7 +30,6 @@ public class Menu {
                     /*Funcion estudiantes graduados*/
                     break;
                 case 4:
-                    /*Funcion estudiantes maestria*/
                     break;
                 case 5:
                     System.out.println("Saliendo del programa...");
