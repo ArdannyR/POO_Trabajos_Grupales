@@ -2,18 +2,13 @@ package Nivel_1;
 
 public class Persona {
 
-    // Definición del enum
-    enum Genero {
-        MASCULINO, FEMENINO
-    }
-
     // Atributos de la superclase 'Persona'
     private String nombre;
     private int edad;
-    private Genero genero;
+    private boolean genero;
 
     // Metodo constructor
-    public Persona(String nombre, int edad, Genero genero) {
+    public Persona(String nombre, int edad, boolean genero) {
         this.nombre = nombre;
         this.edad = edad;
         this.genero = genero;
@@ -44,11 +39,11 @@ public class Persona {
         this.edad = edad;
     }
 
-    public Genero getGenero() {
+    public boolean getGenero() {
         return genero;
     }
 
-    public void setGenero(Genero genero) {
+    public void setGenero(boolean genero) {
         this.genero = genero;
     }
 }
