@@ -1,6 +1,6 @@
 package Main;
 
-import Menu.Login;
+import Controlador.Login;
 
 public class Main {
     public static void main(String[] args) {
