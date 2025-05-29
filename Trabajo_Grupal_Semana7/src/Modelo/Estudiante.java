@@ -1,6 +1,4 @@
-package Nivel_2;
-/*
-import Nivel_1.Persona;
+package Modelo;
 
 public class Estudiante extends Persona {
 
@@ -9,4 +7,3 @@ public class Estudiante extends Persona {
 
     }
 }
-*/
