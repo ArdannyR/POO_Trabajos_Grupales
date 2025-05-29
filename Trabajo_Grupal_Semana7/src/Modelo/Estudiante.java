@@ -19,7 +19,10 @@ public class Estudiante extends Persona {
     @Override
     public void mostrarPerfil() {
         super.mostrarPerfil();
-        System.out.printf("\nCarrera: %s\nPromedio: %d\n",carrera ,promedio);
+        System.out.println("Carrera: " + carrera);
+        System.out.println("Créditos: " + creditos);
+        System.out.println("Promedio: " + promedio);
+        System.out.println("Cursos Inscritos: " + cursosInscritos);
     }
 }
 
