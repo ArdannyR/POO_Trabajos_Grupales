@@ -9,8 +9,8 @@ public class Estudiante extends Persona {
 
     public Estudiante(String nombre, int edad, Genero genero, int creditos, String carrera) {
         super(nombre, edad, genero);
-        this.creditos = creditos;
         this.carrera = carrera;
+        this.promedio = promedio;
     }
 
     @Override
