@@ -1,13 +1,16 @@
 package Modelo;
 
+import java.util.ArrayList;
+
 public class Estudiante extends Persona {
-    protected int creditos;
     protected String carrera;
+    protected double promedio;
+    protected ArrayList<String> cursosInscritos;
 
     public Estudiante(String nombre, int edad, Genero genero, int creditos, String carrera) {
         super(nombre, edad, genero);
-        this.creditos = creditos;
         this.carrera = carrera;
+        this.promedio = promedio;
     }
 
     @Override
