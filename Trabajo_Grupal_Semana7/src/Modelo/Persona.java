@@ -1,4 +1,4 @@
-package Nivel_1;
+package Modelo;
 
 public class Persona {
 
