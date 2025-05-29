@@ -2,52 +2,49 @@ package Modelo;
 
 public class Persona {
 
-    enum Genero {
-        MASCULINO, FEMENINO
-    }
-
-    // Atributos de la superclase 'Persona'
+    // Atributos privados (Encapsulamiento)
     private String nombre;
     private int edad;
-    private Genero genero;
+    private Genero genero; // Usamos el enum Genero
 
-    // Metodo constructor
+    // Constructor
     public Persona(String nombre, int edad, Genero genero) {
         this.nombre = nombre;
         this.edad = edad;
         this.genero = genero;
     }
 
-    // Metodo mostrarPerfil()
-    public void mostrarPerfil() {
-        System.out.println("\nInformación: ");
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Edad: " + edad);
-        System.out.println("Género: " + genero);
-    }
-
-    // Metodos get y set
+    // Getters
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public int getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
     public Genero getGenero() {
         return genero;
     }
 
+    // Setters (algunos ejemplos, puedes añadir más si son necesarios)
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
     public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    // Metodo mostrarPerfil()
+    public void mostrarPerfil() {
+        System.out.println("\n--- Perfil de Persona ---");
+        System.out.println("Nombre: " + this.nombre);
+        System.out.println("Edad: " + this.edad + " años");
+        System.out.println("Género: " + this.genero);
     }
 }
