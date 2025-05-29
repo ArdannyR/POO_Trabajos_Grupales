@@ -77,7 +77,7 @@ public class Main {
         Genero genero = null;
         boolean valido = false;
         while (!valido) {
-            System.out.print("Género (MASCULINO, FEMENINO, NO_BINARIO, OTRO): ");
+            System.out.print("Género (MASCULINO, FEMENINO): ");
             generoStr = scanner.nextLine().trim().toUpperCase();
             try {
                 genero = Genero.valueOf(generoStr);

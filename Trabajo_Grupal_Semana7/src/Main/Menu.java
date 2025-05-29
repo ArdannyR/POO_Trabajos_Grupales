@@ -1,5 +1,7 @@
 package Main;
 
+import Modelo.Estudiante_Graduado;
+
 import java.util.Scanner;
 
 public class Menu {
