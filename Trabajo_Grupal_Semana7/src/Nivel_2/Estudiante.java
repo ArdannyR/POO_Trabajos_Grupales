@@ -1,4 +1,6 @@
 package Nivel_2;
 
-public class Estudiante {
+import Nivel_1.Persona;
+
+public class Estudiante extends Persona {
 }

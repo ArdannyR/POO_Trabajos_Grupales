@@ -1,4 +1,6 @@
 package Nivel_3;
 
-public class Estudiante_Graduado {
+import Nivel_2.Estudiante;
+
+public class Estudiante_Graduado extends Estudiante {
 }
