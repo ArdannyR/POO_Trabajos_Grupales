@@ -1,7 +1,5 @@
-package Nivel_3;
-/*
-import Nivel_2.Estudiante;
+package Modelo;
 
 public class Estudiante_Maestria extends Estudiante {
+
 }
-*/
