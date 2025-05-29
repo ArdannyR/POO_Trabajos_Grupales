@@ -2,18 +2,18 @@ package Modelo;
 
 public class Estudiante extends Persona {
     protected int creditos;
-    protected String curso;
+    protected String carrera;
 
-    public Estudiante(String nombre, int edad, Genero genero, int creditos, String curso) {
+    public Estudiante(String nombre, int edad, Genero genero, int creditos, String carrera) {
         super(nombre, edad, genero);
         this.creditos = creditos;
-        this.curso = curso;
+        this.carrera = carrera;
     }
 
     @Override
     public void mostrarPerfil() {
         super.mostrarPerfil();
-        System.out.printf("\nCurso: %s\nCreditos: %d\n",curso ,creditos);
+        System.out.printf("\nCarrera: %s\nCreditos: %d\n",carrera ,creditos);
     }
 }
 
