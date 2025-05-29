@@ -2,38 +2,38 @@
 package Main;
 
 import Controlador.SistemaAcademicoController;
+import Modelo.Estudiante;
+import Modelo.Estudiante_Graduado;
+import Modelo.Estudiante_Maestria;
 import Modelo.Genero; // Necesario para el enum Genero
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        SistemaAcademicoController controller = new SistemaAcademicoController(); // Instancia del controlador
-        int opcion;
+    private static Scanner scanner = new Scanner(System.in);
+    private static SistemaAcademicoController controller = new SistemaAcademicoController();
 
-        System.out.println("--- Bienvenido al Sistema Académico ---");
+    public static void main(String[] args) {
+        int opcion;
+        System.out.println("--- Bienvenido al Sistema Académico Simplificado ---");
 
         do {
             mostrarMenu();
-            opcion = obtenerOpcion(scanner);
+            opcion = obtenerOpcion();
 
             switch (opcion) {
                 case 1:
-                    crearEstudiante(scanner, controller);
+                    crearEstudianteCompleto(); // Incluye registro de curso
                     break;
                 case 2:
-                    crearEstudianteGraduado(scanner, controller);
+                    crearEstudianteGraduadoCompleto(); // Incluye registro de curso por defecto
                     break;
                 case 3:
-                    crearEstudianteMaestria(scanner, controller);
+                    crearEstudianteMaestriaCompleto(); // Incluye registro de curso por defecto
                     break;
                 case 4:
-                    registrarCurso(scanner, controller);
-                    break;
-                case 5:
-                    controller.mostrarTodosLosPerfiles(); // Polimorfismo en acción
+                    controller.mostrarTodosLosPerfiles();
                     break;
                 case 0:
                     System.out.println("Saliendo del sistema. ¡Hasta luego!");
@@ -42,42 +42,40 @@ public class Main {
                     System.out.println("Opción inválida. Por favor, intente de nuevo.");
             }
             System.out.println("\nPresione Enter para continuar...");
-            scanner.nextLine(); // Consumir el salto de línea pendiente
+            scanner.nextLine(); // Consumir el salto de línea pendiente después de la pausa
         } while (opcion != 0);
 
-        scanner.close(); // Cierra el scanner al salir del programa
+        scanner.close();
     }
 
-    // Métodos auxiliares para el menú
     private static void mostrarMenu() {
         System.out.println("\n--- MENÚ PRINCIPAL ---");
-        System.out.println("1. Crear Estudiante");
+        System.out.println("1. Crear Estudiante (Básico)");
         System.out.println("2. Crear Estudiante Graduado");
         System.out.println("3. Crear Estudiante de Maestría");
-        System.out.println("4. Registrar Curso a Estudiante");
-        System.out.println("5. Mostrar Todos los Perfiles");
+        System.out.println("4. Mostrar Todos los Perfiles");
         System.out.println("0. Salir");
         System.out.print("Seleccione una opción: ");
     }
 
-    private static int obtenerOpcion(Scanner scanner) {
+    private static int obtenerOpcion() {
         try {
             int opcion = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea pendiente
+            scanner.nextLine(); // Consumir el salto de línea
             return opcion;
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Por favor, ingrese un número.");
             scanner.nextLine(); // Consumir la entrada incorrecta
-            return -1; // Retorna un valor inválido para que el switch lo maneje
+            return -1;
         }
     }
 
-    private static Genero obtenerGenero(Scanner scanner) {
+    private static Genero obtenerGenero() {
         String generoStr;
         Genero genero = null;
         boolean valido = false;
         while (!valido) {
-            System.out.print("Género (MASCULINO, FEMENINO): ");
+            System.out.print("Género (MASCULINO, FEMENINO, NO_BINARIO, OTRO): ");
             generoStr = scanner.nextLine().trim().toUpperCase();
             try {
                 genero = Genero.valueOf(generoStr);
@@ -89,109 +87,107 @@ public class Main {
         return genero;
     }
 
-    // Métodos para crear cada tipo de estudiante y pasarlo al controlador
-    private static void crearEstudiante(Scanner scanner, SistemaAcademicoController controller) {
-        System.out.println("\n--- Crear Nuevo Estudiante ---");
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Edad: ");
-        int edad = obtenerIntValido(scanner);
-        Genero genero = obtenerGenero(scanner);
-        System.out.print("Carrera: ");
-        String carrera = scanner.nextLine();
-        System.out.print("Créditos Acumulados Iniciales: ");
-        int creditosIniciales = obtenerIntValido(scanner);
-        System.out.print("Promedio: ");
-        double promedio = obtenerDoubleValido(scanner);
-
-        controller.crearYAgregarEstudiante(nombre, edad, genero, carrera, creditosIniciales, promedio);
+    private static int obtenerIntValido(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            try {
+                int valor = scanner.nextInt();
+                scanner.nextLine(); // Consumir el salto de línea
+                return valor;
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese un número entero.");
+                scanner.nextLine(); // Consumir la entrada incorrecta
+            }
+        }
     }
 
-    private static void crearEstudianteGraduado(Scanner scanner, SistemaAcademicoController controller) {
-        System.out.println("\n--- Crear Nuevo Estudiante Graduado ---");
+    private static double obtenerDoubleValido(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            try {
+                double valor = scanner.nextDouble();
+                scanner.nextLine(); // Consumir el salto de línea
+                return valor;
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese un número decimal.");
+                scanner.nextLine(); // Consumir la entrada incorrecta
+            }
+        }
+    }
+
+    // Método general para solicitar datos básicos de Persona/Estudiante
+    private static Estudiante solicitarDatosEstudianteBase() {
         System.out.print("Nombre: ");
         String nombre = scanner.nextLine();
-        System.out.print("Edad: ");
-        int edad = obtenerIntValido(scanner);
-        Genero genero = obtenerGenero(scanner);
+        int edad = obtenerIntValido("Edad: ");
+        Genero genero = obtenerGenero();
         System.out.print("Carrera: ");
         String carrera = scanner.nextLine();
-        System.out.print("Créditos Acumulados Iniciales: ");
-        int creditosIniciales = obtenerIntValido(scanner);
-        System.out.print("Promedio: ");
-        double promedio = obtenerDoubleValido(scanner);
+        double promedio = obtenerDoubleValido("Promedio: ");
+        return new Estudiante(nombre, edad, genero, carrera, promedio);
+    }
+
+    // 1. Crear Estudiante y registrar curso
+    private static void crearEstudianteCompleto() {
+        System.out.println("\n--- Crear Nuevo Estudiante ---");
+        Estudiante nuevoEstudiante = solicitarDatosEstudianteBase();
+        controller.agregarPersona(nuevoEstudiante);
+
+        System.out.println("\n--- Registrar primer curso para " + nuevoEstudiante.getNombre() + " ---");
+        System.out.print("Nombre del primer curso: ");
+        String nombreCurso = scanner.nextLine();
+        System.out.print("¿Desea especificar los créditos? (s/n): ");
+        String opcionCreditos = scanner.nextLine().trim().toLowerCase();
+
+        if (opcionCreditos.equals("s")) {
+            int creditos = obtenerIntValido("Créditos del curso: ");
+            nuevoEstudiante.registrarCurso(nombreCurso, creditos);
+        } else {
+            nuevoEstudiante.registrarCurso(nombreCurso); // Usa créditos por defecto
+        }
+    }
+
+    // 2. Crear Estudiante Graduado (sin registrar curso inicial para simplificar)
+    private static void crearEstudianteGraduadoCompleto() {
+        System.out.println("\n--- Crear Nuevo Estudiante Graduado ---");
+        Estudiante baseEstudiante = solicitarDatosEstudianteBase(); // Reutiliza la lógica
         System.out.print("Tema de Tesis: ");
         String temaTesis = scanner.nextLine();
-        System.out.print("Universidad de Grado Anterior: ");
-        String universidadAnterior = scanner.nextLine();
 
-        controller.crearYAgregarEstudianteGraduado(nombre, edad, genero, carrera, creditosIniciales, promedio, temaTesis, universidadAnterior);
+        Estudiante_Graduado nuevoGraduado = new Estudiante_Graduado(
+                baseEstudiante.getNombre(), baseEstudiante.getEdad(), baseEstudiante.getGenero(),
+                baseEstudiante.getCarrera(), baseEstudiante.getPromedio(), temaTesis
+        );
+        controller.agregarPersona(nuevoGraduado);
+
+        // Opcional: Registrar un curso por defecto para este tipo si se desea
+        System.out.print("¿Desea registrar un curso para " + nuevoGraduado.getNombre() + " (por defecto)? (s/n): ");
+        String regCurso = scanner.nextLine().trim().toLowerCase();
+        if (regCurso.equals("s")) {
+            nuevoGraduado.registrarCurso("Seminario de Postgrado");
+        }
     }
 
-    private static void crearEstudianteMaestria(Scanner scanner, SistemaAcademicoController controller) {
+    // 3. Crear Estudiante Maestría (sin registrar curso inicial para simplificar)
+    private static void crearEstudianteMaestriaCompleto() {
         System.out.println("\n--- Crear Nuevo Estudiante de Maestría ---");
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Edad: ");
-        int edad = obtenerIntValido(scanner);
-        Genero genero = obtenerGenero(scanner);
-        System.out.print("Carrera: ");
-        String carrera = scanner.nextLine();
-        System.out.print("Créditos Acumulados Iniciales: ");
-        int creditosIniciales = obtenerIntValido(scanner);
-        System.out.print("Promedio: ");
-        double promedio = obtenerDoubleValido(scanner);
+        Estudiante baseEstudiante = solicitarDatosEstudianteBase(); // Reutiliza la lógica
         System.out.print("Área de Especialización: ");
         String areaEspecializacion = scanner.nextLine();
         System.out.print("Nombre del Supervisor: ");
         String nombreSupervisor = scanner.nextLine();
 
-        controller.crearYAgregarEstudianteMaestria(nombre, edad, genero, carrera, creditosIniciales, promedio, areaEspecializacion, nombreSupervisor);
-    }
+        Estudiante_Maestria nuevoMaestria = new Estudiante_Maestria(
+                baseEstudiante.getNombre(), baseEstudiante.getEdad(), baseEstudiante.getGenero(),
+                baseEstudiante.getCarrera(), baseEstudiante.getPromedio(), areaEspecializacion, nombreSupervisor
+        );
+        controller.agregarPersona(nuevoMaestria);
 
-    private static void registrarCurso(Scanner scanner, SistemaAcademicoController controller) {
-        System.out.println("\n--- Registrar Curso a Estudiante ---");
-        System.out.print("Nombre del estudiante a quien registrar el curso: ");
-        String nombreEstudiante = scanner.nextLine();
-        System.out.print("Nombre del curso: ");
-        String nombreCurso = scanner.nextLine();
-        System.out.print("¿Desea especificar los créditos del curso? (s/n): ");
-        String opcionCreditos = scanner.nextLine().trim().toLowerCase();
-
-        if (opcionCreditos.equals("s")) {
-            System.out.print("Créditos del curso: ");
-            int creditos = obtenerIntValido(scanner);
-            controller.registrarCursoAEstudiante(nombreEstudiante, nombreCurso, creditos);
-        } else {
-            controller.registrarCursoAEstudiante(nombreEstudiante, nombreCurso, 0); // 0 indica que no se especificaron créditos, se usará por defecto
-        }
-    }
-
-
-    // Métodos para obtener entradas válidas y manejar errores
-    private static int obtenerIntValido(Scanner scanner) {
-        while (true) {
-            try {
-                int valor = scanner.nextInt();
-                scanner.nextLine(); // Consumir el salto de línea pendiente
-                return valor;
-            } catch (InputMismatchException e) {
-                System.out.print("Entrada inválida. Por favor, ingrese un número entero: ");
-                scanner.nextLine(); // Consumir la entrada incorrecta
-            }
-        }
-    }
-
-    private static double obtenerDoubleValido(Scanner scanner) {
-        while (true) {
-            try {
-                double valor = scanner.nextDouble();
-                scanner.nextLine(); // Consumir el salto de línea pendiente
-                return valor;
-            } catch (InputMismatchException e) {
-                System.out.print("Entrada inválida. Por favor, ingrese un número decimal: ");
-                scanner.nextLine(); // Consumir la entrada incorrecta
-            }
+        // Opcional: Registrar un curso por defecto para este tipo si se desea
+        System.out.print("¿Desea registrar un curso para " + nuevoMaestria.getNombre() + " (por defecto)? (s/n): ");
+        String regCurso = scanner.nextLine().trim().toLowerCase();
+        if (regCurso.equals("s")) {
+            nuevoMaestria.registrarCurso("Metodología de la Investigación");
         }
     }
 }
