@@ -2,13 +2,17 @@ package Modelo;
 
 public class Persona {
 
+    enum Genero {
+        MASCULINO, FEMENINO
+    }
+
     // Atributos de la superclase 'Persona'
     private String nombre;
     private int edad;
-    private boolean genero;
+    private Genero genero;
 
     // Metodo constructor
-    public Persona(String nombre, int edad, boolean genero) {
+    public Persona(String nombre, int edad, Genero genero) {
         this.nombre = nombre;
         this.edad = edad;
         this.genero = genero;
@@ -39,11 +43,11 @@ public class Persona {
         this.edad = edad;
     }
 
-    public boolean getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(boolean genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 }
